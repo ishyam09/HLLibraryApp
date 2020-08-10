@@ -7,8 +7,17 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isRating: false,
       show: false,
       title: ''
+    }
+  }
+
+  onStarRating(rating) {
+    if (rating > 0) {
+      this.setState({
+        isRating: true
+      })
     }
   }
   
@@ -32,12 +41,14 @@ export default class App extends Component {
               <View style={{flex: 1}}>
                  <Text style={{paddingHorizontal: 10, fontSize: 12, marginTop: 3}} >{item.category}</Text>
                  <View style={{paddingLeft: 10, width: 50, marginTop: 3}}>
-                 <StarRating 
-                  starSize={25} 
-                  disabled={true} 
-                  maxStars={5} 
-                  rating={item.rating} 
-                  fullStarColor='#FFD700'/>
+                 
+                 {(item.rating > 0) && (
+                   <StarRating 
+                    starSize={25} 
+                    disabled={true} 
+                    maxStars={5} 
+                    rating={item.rating}
+                    fullStarColor='#FFD700'/> )}
                  </View>
                  <TouchableOpacity onPress={() => {this.setState({show: true, title: item.image.uri})}}>
                    <Text style={{paddingHorizontal: 10, fontSize: 20, fontWeight:'700', marginTop: 5}} >{item.title} </Text>
