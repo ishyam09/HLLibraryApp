@@ -7,17 +7,8 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isRating: false,
       show: false,
       title: ''
-    }
-  }
-
-  onStarRating(rating) {
-    if (rating > 0) {
-      this.setState({
-        isRating: true
-      })
     }
   }
   
