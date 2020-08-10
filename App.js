@@ -7,7 +7,8 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      show: false
+      show: false,
+      title: ''
     }
   }
   
@@ -23,7 +24,7 @@ export default class App extends Component {
           data={data}
           renderItem={({ item }) => 
             <View style={{flex: 1, height: 300, width: 300, marginTop: 10}}>
-              <TouchableOpacity style={{flex: 2}} onPress={() => {this.setState({show: true})}}>
+              <TouchableOpacity style={{flex: 2}} onPress={() => {this.setState({show: true, title: item.image.uri})}}>
                 <View style={{flex: 2}}>
                   <Image source={item.image} style={{flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 30}}/>
                 </View>
@@ -38,7 +39,7 @@ export default class App extends Component {
                   rating={item.rating} 
                   fullStarColor='#FFD700'/>
                  </View>
-                 <TouchableOpacity onPress={() => {this.setState({show: true})}}>
+                 <TouchableOpacity onPress={() => {this.setState({show: true, title: item.image.uri})}}>
                    <Text style={{paddingHorizontal: 10, fontSize: 20, fontWeight:'700', marginTop: 5}} >{item.title} </Text>
                  </TouchableOpacity>
               </View>
@@ -46,8 +47,8 @@ export default class App extends Component {
               <Modal transparent = {true} visible={this.state.show}>
                 <View style={{backgroundColor:'#000000AA', flex: 1}}>
                   <View style={{backgroundColor: 'white', margin: 50, padding: 50}}>
-                    <TouchableOpacity onPress={() => {this.setState({show: false})}}>
-                      <Text style={{fontSize: 20}}>{item.image.uri !=null ? item.image.uri : "No url found"}</Text>
+                    <TouchableOpacity onPress={() => {this.setState({show: false, title: null})}}>
+                      <Text style={{fontSize: 20}}>{this.state.title !=null ? this.state.title : "No url found"}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
