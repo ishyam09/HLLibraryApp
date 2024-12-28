@@ -1,67 +1,82 @@
-import React, {Component} from 'react';
-import { Text, View, Image, SafeAreaView, FlatList, Modal, TouchableOpacity } from 'react-native';
-import StarRating from 'react-native-star-rating';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
+
+import React, { Component } from "react";
+import { SafeAreaView, Text, View, FlatList, TouchableOpacity, Image, Modal } from "react-native";
+import { Rating } from "@kolking/react-native-rating";
 
 export default class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
+    this.state ={
       show: false,
       title: ''
     }
   }
-  
-  render() {
-    return(
-      <SafeAreaView>
-        <FlatList 
-          horizontal pagingEnabled={true} 
-          showsHorizontalScrollIndicator={false} 
-          legacyImplementation={false} 
-          ItemSeparatorComponent={ () => <View style={{ width: 16, backgroundColor: 'white' }}/> }
-          style= {{marginLeft: 20, marginRight: 20}}
-          data={data}
-          renderItem={({ item }) => 
-            <View style={{flex: 1, height: 300, width: 300, marginTop: 10}}>
-              <TouchableOpacity style={{flex: 2}} onPress={() => {this.setState({show: true, title: item.image.uri})}}>
-                <View style={{flex: 2}}>
-                  <Image source={item.image} style={{flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 30}}/>
-                </View>
-              </TouchableOpacity>
-              <View style={{flex: 1}}>
-                 <Text style={{paddingHorizontal: 10, fontSize: 12, marginTop: 3}} >{item.category}</Text>
-                 <View style={{paddingLeft: 10, width: 50, marginTop: 3}}>
-                 
-                 {(item.rating > 0) && (
-                   <StarRating 
-                    starSize={25} 
-                    disabled={true} 
-                    maxStars={5} 
-                    rating={item.rating}
-                    fullStarColor='#FFD700'/> )}
-                 </View>
-                 <TouchableOpacity onPress={() => {this.setState({show: true, title: item.image.uri})}}>
-                   <Text style={{paddingHorizontal: 10, fontSize: 20, fontWeight:'700', marginTop: 5}} >{item.title} </Text>
-                 </TouchableOpacity>
+render() {
+  return(
+    <SafeAreaView>
+      <FlatList
+        horizontal
+        pagingEnabled={true}
+        showsHorizontalScrollIndicator={false}
+        legacyImplementation={false}
+        ItemSeparatorComponent={() => <View style={{width: 16, backgroundColor: 'white'}}/>}
+        style={{marginHorizontal: 20}} //marginLeft: 20, marginRight: 20, 
+        data={data}
+        renderItem={({item}) => 
+          <View style={{flex: 1, height: 300, width: 300, marginTop: 10}}>
+            <TouchableOpacity style={{flex: 2}} onPress={() => {this.setState({show: true, title: item.image.uri})}}>
+              <View style={{flex: 2}}>
+                <Image source={item.image} style={{flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 30}} />
               </View>
+            </TouchableOpacity>
 
-              <Modal transparent = {true} visible={this.state.show}>
-                <View style={{backgroundColor:'#000000AA', flex: 1}}>
-                  <View style={{backgroundColor: 'white', margin: 50, padding: 50}}>
-                    <TouchableOpacity onPress={() => {this.setState({show: false, title: null})}}>
-                      <Text style={{fontSize: 20}}>{this.state.title !=null ? this.state.title : "No url found"}</Text>
-                    </TouchableOpacity>
-                  </View>
+            <View style={{flex: 1}}>
+              <Text style={{paddingHorizontal: 10, fontSize: 12, marginTop: 3}}> {item.category} </Text>
+              <View style={{paddingLeft: 10, width: 50, marginTop: 3}}>
+                {(item.rating > 0) && (
+                  <Rating
+                    size={25}
+                    rating={item.rating}
+                    disabled={true}
+                    maxRating={5}
+                    variant="stars-outline"
+                  />
+                )}
+              </View>
+              <TouchableOpacity onPress={() => {this.setState({show: true, title: item.image.uri})}}>
+                <Text style={{paddingHorizontal: 10, fontSize: 20, fontWeight: '700', marginTop: 5}}>{item.title}</Text>
+              </TouchableOpacity>
+            </View>
+
+            <Modal transparent = {true} visible={this.state.show}>
+              <View style={{backgroundColor: '#000000AA', flex: 1}}>
+                <View style={{backgroundColor: 'white', margin: 50, padding: 50}}>
+                  <TouchableOpacity onPress={() => {this.setState({show: false, title: null})}}>
+                    <Text style={{fontSize: 20}}>{this.state.title !=null ? this.state.title : "No url found"}</Text>
+                  </TouchableOpacity>
                 </View>
+              </View>
+            </Modal>
+          </View>
+        }
+        keyExtractor={item => item.id.toString()}
+      />
 
-              </Modal>
-
-            </View> }
-          keyExtractor={item => item.id.toString()} />
-      </SafeAreaView>
-    )
-  }
+      {/* <View>
+        <Text>Hello</Text>
+      </View> */}
+    </SafeAreaView>
+    
+  )
+}
 }
 
 export const data = [
